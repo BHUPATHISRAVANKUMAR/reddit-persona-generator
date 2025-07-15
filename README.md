@@ -88,7 +88,9 @@ client_id = "YOUR_CLIENT_ID"
 client_secret = "YOUR_CLIENT_SECRET"
 user_agent = "PersonaAnalyzer/0.1 by u/YOUR_REDDIT_USERNAME"
 ```
+Ensure you replace "YOUR_CLIENT_ID", "YOUR_CLIENT_SECRET", and the user_agent string with the values you copied.
 
+Important: A 401 error often occurs if these credentials are incorrect, missing, or if the app type is not "script". Double-check all entries.
 ---
 
 ### 🚀 Step 5: Run the Application
@@ -134,38 +136,9 @@ reddit-persona-generator/
 
 ## 🎨 Output Example
 
-### UI Preview
+### ✅ UI Display Screenshot
 
-```
-KOJIED
-PERSONAL DETAILS
-- Location: (Inferred from posts)
-- Age: Not available
-- Occupation: Not available
-
-BEHAVIOR & HABITS
-- Interest in Technology    (Citation: "Love using tech gadgets..." - post)
-- Positive attitude         (Citation: "Really enjoyed the update..." - comment)
-
-FRUSTRATIONS
-- Frustrated sentiment      (Citation: "This bug is annoying..." - post)
-
-MOTIVATIONS
-- Convenience
-- Wellness
-
-GOALS & NEEDS
-- Desire to improve         (Citation: "Need to learn more..." - comment)
-
-PERSONALITY
-- Practical
-- Adaptable
-- Spontaneous
-- Active
-
-QUOTE
-"I want to spend less time ordering and more time enjoying my meal."
-```
+![Reddit Persona Generator UI Screenshot](./Screenshot%202025-07-15%20124424.png)
 
 ---
 
@@ -173,7 +146,44 @@ QUOTE
 
 **Filename**: `kojied_persona_2025-07-15.txt`
 
-Same content as above, neatly formatted for offline use.
+```
+KOJIED
+======
+
+PERSONAL DETAILS
+----------------
+- Location: (Inferred from posts)     
+- Age: (Not available)               
+- Occupation: (Not available)        
+
+BEHAVIOR & HABITS
+-----------------
+- Interest in Westchester    Citation: I feel violated by intern season...
+- Interest in Vision Air 5   Citation: Can't wait for Vision Air 5 launching...
+- Interest in iPad           Citation: Killer feature: accessing chatGPT...
+- Interest in Mac            Citation: Can you actually “work” in AVP?...
+- Interest in Pokémon Go     Citation: Would you guys like to see Pokémon Go...
+
+FRUSTRATIONS
+------------
+- None available in this session
+
+MOTIVATIONS
+-----------
+- Convenience
+- Exploration
+
+GOALS & NEEDS
+-------------
+- To explore tech
+- To stay updated
+
+
+
+QUOTE
+-----
+"I am fully satisfied with the work done on the Reddit Persona Generator.Thanks for the unique assignment."
+```
 
 ---
 
@@ -195,8 +205,7 @@ MIT License © 2025 \[BHUPATHI SRAVAN KUMAR]
 
 ## 📧 Contact
 
-Questions? Open an issue or reach out via (https://github.com/BHUPATHISRAVANKUMAR).
-
+Questions? Open an issue or reach out via your [GitHub profile](https://github.com/BHUPATHISRAVANKUMAR).
 ---
 
 ## 📝 Notes
