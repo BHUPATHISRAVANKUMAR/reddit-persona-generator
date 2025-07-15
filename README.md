@@ -41,7 +41,7 @@ The output is shown in a user-friendly interface and can also be **downloaded as
 ### 🔽 Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/reddit-persona-generator.git
+git clone https://github.com/BHUPATHISRAVANKUMAR/reddit-persona-generator.git
 cd reddit-persona-generator
 ```
 
