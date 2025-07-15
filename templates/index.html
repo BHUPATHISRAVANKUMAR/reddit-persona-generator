@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reddit Persona Generator</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif; /* Modern, clean font */
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Gradient background */
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .input-group {
+      margin-bottom: 25px;
+    }
+    input[type="text"] {
+      padding: 12px;
+      width: 75%;
+      max-width: 550px;
+      border: 2px solid #4a90e2; /* Attractive blue border */
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+    input[type="text"]:focus {
+      border-color: #2e6da4; /* Darker blue on focus */
+      outline: none;
+    }
+    button {
+      padding: 12px 25px;
+      background-color: #4a90e2; /* Vibrant blue button */
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    button:hover {
+      background-color: #2e6da4; /* Darker blue on hover */
+      transform: translateY(-2px); /* Slight lift effect */
+    }
+    #status {
+      color: #e74c3c; /* Red for errors */
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    #personaDetails {
+      text-align: left;
+      margin-top: 25px;
+      padding: 20px;
+      background-color: #f9f9f9; /* Light gray background */
+      border-radius: 10px;
+      display: none;
+      border-left: 5px solid #4a90e2; /* Highlighted border */
+    }
+    #personaDetails h2 {
+      color: #2e6da4; /* Dark blue for header */
+      font-size: 28px;
+      border-bottom: 3px solid #4a90e2;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+    #personaDetails h3 {
+      margin-top: 15px;
+      color: #34495e; /* Dark gray for sections */
+      font-size: 20px;
+    }
+    #personaDetails ul {
+      list-style-type: none;
+      padding-left: 20px;
+    }
+    #personaDetails li {
+      padding: 5px 0;
+      color: #7f8c8d; /* Medium gray for text */
+    }
+    #personaDetails .citation {
+      font-style: italic;
+      color: #9b59b6; /* Purple for citations */
+      margin-left: 20px;
+    }
+    #personaDetails p {
+      margin-top: 15px;
+      color: #ff8800; /* Green for quote */
+      font-style: italic;
+      font-size: 18px;
+    }
+    #saveMessage {
+      margin-top: 15px;
+      padding: 10px;
+      background-color: #2ecc71; /* Green background */
+      color: white;
+      border-radius: 5px;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1 style="color: #2e6da4; font-size: 32px;">Reddit Persona Generator</h1>
+    <div class="input-group">
+      <input type="text" id="urlInput" placeholder="Enter Reddit URLs (e.g., https://www.reddit.com/user/kojied)">
+      <button onclick="generatePersona()">Generate Persona</button>
+    </div>
+    <div id="status"></div>
+    <div id="saveMessage">✅ Your persona has been saved as a .txt file in the 'personas' folder. Please check there if needed!</div>
+    <div id="personaDetails"></div>
+    
+  </div>
+
+  <script>
+    function generatePersona() {
+      const urlInput = document.getElementById('urlInput').value.trim();
+      const status = document.getElementById('status');
+      const personaDetails = document.getElementById('personaDetails');
+      const saveMessage = document.getElementById('saveMessage');
+
+      if (!urlInput) {
+        status.textContent = "Please enter a valid URL.";
+        return;
+      }
+
+      const urls = urlInput.split(',').map(url => url.trim());
+      personaDetails.style.display = 'none';
+      saveMessage.style.display = 'none';
+      status.textContent = "Generating persona...";
+      personaDetails.innerHTML = ''; // Clear previous content
+
+      urls.forEach(url => {
+        fetch('/api/persona', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            status.textContent = data.error;
+            return;
+          }
+          personaDetails.style.display = 'block';
+          saveMessage.style.display = 'block';
+          personaDetails.innerHTML = `<h2>${data.username}</h2>`;
+          Object.entries(data.sections).forEach(([section, items]) => {
+            if (items.length > 0) {
+              personaDetails.innerHTML += `<h3>${section}</h3><ul>`;
+              items.forEach(item => {
+                personaDetails.innerHTML += `<li>  - ${item}</li>`;
+                if (data.citations[item]) {
+                  personaDetails.innerHTML += `<li class="citation">    Citation: ${data.citations[item]}</li>`;
+                }
+              });
+              personaDetails.innerHTML += `</ul>`;
+            }
+          });
+          personaDetails.innerHTML += `<p><strong>QUOTE:</strong> "${data.quote}"</p>`;
+          status.textContent = "Persona generated successfully!";
+        })
+        .catch(error => {
+          status.textContent = `Error: ${error.message}`;
+        });
+      });
+    }
+  </script>
+</body>
+</html>
